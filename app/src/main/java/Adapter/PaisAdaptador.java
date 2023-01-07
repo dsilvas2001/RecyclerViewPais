@@ -16,12 +16,13 @@ import java.util.List;
 
 import Models.Pais;
 
-public class PaisAdaptador extends RecyclerView.Adapter<PaisAdaptador.PaisViewHolder>{
+public class PaisAdaptador extends RecyclerView.Adapter<PaisAdaptador.PaisViewHolder> {
+
     private Context Ctx;
-    private List<Pais> lstpais;
+    private List<Pais> lstPaises;
 
     public PaisAdaptador(Context mCtx, List<Pais> paises) {
-        this.lstpais = paises;
+        this.lstPaises = paises;
         Ctx = mCtx;
     }
 
@@ -35,32 +36,29 @@ public class PaisAdaptador extends RecyclerView.Adapter<PaisAdaptador.PaisViewHo
 
     @Override
     public void onBindViewHolder(PaisAdaptador.PaisViewHolder holder, int position) {
-        Pais pais = lstpais.get(position);
-
-        holder.txtTituloPais.setText(pais.getTitulopais());
-        holder.txtCapital.setText(pais.getCapital());
-        holder.txtPrefijo.setText(pais.getPrefijo());
+        Pais paises = lstPaises.get(position);
+        holder.txtTituloPais.setText(paises.getTxtTituloPais());
+        holder.txtCapital.setText(paises.getTxtCapital());
+        holder.txtPrefijo.setText(paises.getPrefijo());
         Glide.with(Ctx)
-                .load(pais.getUrlBandera())
+                .load(paises.getImgUrlBandera())
                 .into(holder.imgUrlBandera);
     }
 
     @Override
     public int getItemCount() {
-        return lstpais.size();
+        return lstPaises.size();
     }
 
     class PaisViewHolder extends RecyclerView.ViewHolder {
         TextView txtTituloPais, txtCapital, txtPrefijo;
         ImageView imgUrlBandera;
-
         public PaisViewHolder(View itemView) {
             super(itemView);
             txtTituloPais = itemView.findViewById(R.id.txtTituloPais);
             txtCapital = itemView.findViewById(R.id.txtCapital);
             txtPrefijo = itemView.findViewById(R.id.txtPrefijo);
             imgUrlBandera = itemView.findViewById(R.id.imgUrlBandera);
-
         }
     }
 }

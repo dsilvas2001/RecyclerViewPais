@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
+
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -32,28 +33,28 @@
                 android:text="Nombre"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small"
                 android:textColor="#000000" />
-
             <TextView
                 android:id="@+id/txtCapital"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/txtPrefijo"
+                android:layout_below="@id/txtTituloPais"
                 android:layout_marginLeft="5dp"
                 android:layout_toRightOf="@id/imgUrlBandera"
                 android:text="correo@gmmail.com"
                 android:textAlignment="viewStart"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Small.Inverse"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtPrefijo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/txtTituloPais"
-                android:layout_marginLeft="5dp"
+                android:layout_below="@id/txtCapital"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="12dp"
                 android:layout_toRightOf="@id/imgUrlBandera"
                 android:text="URL Imagen"
                 android:textAppearance="@style/Base.TextAppearance.AppCompat.Small" />
         </RelativeLayout>
     </androidx.cardview.widget.CardView>
-</LinearLayout>
+
+</RelativeLayout>
