@@ -19,6 +19,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.demh.recyclerviewpais.R;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,27 +30,28 @@ import Adapter.PaisAdaptador;
 import Models.Pais;
 
 public class MainActivity extends AppCompatActivity {
-    RecyclerView recyclerPais;
+    RecyclerView recyclerCountry;
     RequestQueue queue;
     StringRequest stringRequest;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        recyclerPais = (RecyclerView) findViewById(R.id.recyclerPaisView);
-        recyclerPais.setHasFixedSize(true);
-        recyclerPais.setLayoutManager(new LinearLayoutManager(this));
-        recyclerPais.setItemAnimator(new DefaultItemAnimator());
+
+        recyclerCountry = (RecyclerView) findViewById(R.id.recyclerPaisView);
+        recyclerCountry.setHasFixedSize(true);
+        recyclerCountry.setLayoutManager(new LinearLayoutManager(this));
+        recyclerCountry.setItemAnimator(new DefaultItemAnimator());
 
         Bundle bundle = this.getIntent().getExtras();
 
         // Instantiate the RequestQueue.
-        queue = Volley.newRequestQueue(this);
+         queue = Volley.newRequestQueue(this);
         String url ="http://www.geognos.com/api/en/countries/info/all.json";
 
-
         // Request a string response from the provided URL.
-        stringRequest = new StringRequest(Request.Method.GET, url,
+         stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -57,25 +59,18 @@ public class MainActivity extends AppCompatActivity {
 
                         try {
                             JSONObject JSONOBJECTpais = new JSONObject(response);
-                            JSONObject JSONlistaPais=  JSONOBJECTpais.getJSONObject("Results");
-                            Iterator<String> Isopais =  JSONlistaPais.keys();
+                            JSONObject JSONOBJECTpais2 = JSONOBJECTpais.getJSONObject("Results");
+                            Iterator < String > codigosPaises = JSONOBJECTpais2.keys();
+                            while (codigosPaises.hasNext())
+                                paises.add(new Pais(JSONOBJECTpais2.getJSONObject(codigosPaises.next())));
 
-                            while (Isopais.hasNext()) {
-                                String aux;
-                                aux=Isopais.next();
-                                JSONObject paiscontador = JSONlistaPais.getJSONObject(aux);
-                                // System.out.println(paiscontador);
-                                Pais ps= new Pais(paiscontador);
-                                paises.add(ps);
-                                // System.out.println(ps);
-                                Log.d("etiqueta",paiscontador.toString());
-                                int resId = R.anim.layout_animation_down_to_up;
-                                LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(getApplicationContext(),
-                                        resId);
-                                recyclerPais.setLayoutAnimation(animation);
-                                PaisAdaptador adapatorpais = new PaisAdaptador(getApplicationContext(), paises);
-                                recyclerPais.setAdapter(adapatorpais);
-                            }
+                            int resId = R.anim.layout_animation_down_to_up;
+                            LayoutAnimationController animation = AnimationUtils.loadLayoutAnimation(getApplicationContext(),
+                                    resId);
+                            recyclerCountry.setLayoutAnimation(animation);
+                            PaisAdaptador adapatorPais = new PaisAdaptador(getApplicationContext(), paises);
+                            recyclerCountry.setAdapter(adapatorPais);
+
                         }
                         catch (JSONException e)
                         {
@@ -92,5 +87,6 @@ public class MainActivity extends AppCompatActivity {
 
         // Add the request to the RequestQueue.
         queue.add(stringRequest);
+
     }
 }
